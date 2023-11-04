@@ -10,6 +10,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract MemberNFT is ERC721Enumerable, ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;
 
+    /**
+     * @dev
+     * - 誰にどのtokenId, URIでNFTをmintしたかを記録する
+     */
+    event TokenURIChanged(address indexed to, uint256 indexed tokenId, string uri);
+
     constructor(address initialOwner) Ownable(initialOwner) ERC721("MemberNFT", "MEM") {}
 
     /**
@@ -20,6 +26,7 @@ contract MemberNFT is ERC721Enumerable, ERC721URIStorage, Ownable {
         _tokenIdCounter+=1;
         _mint(to, _tokenIdCounter);
         _setTokenURI(_tokenIdCounter, uri);
+        emit TokenURIChanged(to, _tokenIdCounter, uri);
     }
 
     /**

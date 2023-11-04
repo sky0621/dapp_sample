@@ -40,7 +40,12 @@ describe("MemberNFTコントラクト", async function() {
     })
 
     it("owner以外はNFT作成に失敗すべき", async function() {
-        expect(memberNFT.connect(account1).nftMint(account1.address, tokenUri1)).to.be.revertedWith("");
+        await expect(memberNFT.connect(account1).nftMint(account1.address, tokenUri1))
+            .to.be.revertedWith("OwnableUnauthorizedAccount");
     })
 
+    it("NFT作成後に'TokenURIChanged'イベントが発行されるべき", async function() {
+        await expect(memberNFT.nftMint(account1.address, tokenUri1))
+            .to.emit(memberNFT, "TokenURIChanged").withArgs(account1.address, 1, tokenUri1);
+    })
 })
