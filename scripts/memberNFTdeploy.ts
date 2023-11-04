@@ -1,10 +1,11 @@
 import {ethers} from "hardhat";
 import * as dotenv from "dotenv"
+import * as fs from "fs"
 
 dotenv.config()
 
 const main = async () => {
-    const ownerAddr = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    const ownerAddr = "0xfc8338240C87968e63C6C2C3453C540accaAF972"
     const addr1 = "0x500393D4F2b53B5D3Ef695C381Afde2Fb18a7A45"
     const addr2 = "0xB5D8D3BF67A0991512b159864b3e84fbCE38BBa3"
     const addr3 = "0x5b4BC6A3Ab9dc6d4F192268EA4DA0257Fa0d8777"
@@ -37,6 +38,12 @@ const main = async () => {
     tx = await memberNFT.nftMint(addr2, tokenURI4);
     await tx.wait();
     console.info("NFT#4 minted.");
+
+    fs.writeFileSync("./memberNFTContract.js",
+        `
+        module.exports = "${memberNFT.address}"
+        `
+        );
 }
 
 main().catch((error) => {

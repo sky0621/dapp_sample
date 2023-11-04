@@ -9,7 +9,8 @@
     "node": "npx hardhat node",
     "deploy": "npx hardhat run scripts/deploy.ts",
     "deploy:local": "npx hardhat run scripts/deploy.ts --network localhost",
-    "console": "npx hardhat console --network localhost"
+    "console": "npx hardhat console --network localhost",
+    "verify": "npx hardhat verify 0xEeDffBE76E979404EfC34c4eA8CAa11816Bea64A 0xfc8338240C87968e63C6C2C3453C540accaAF972 --network mumbai"
   },
   "keywords": [],
   "author": "",
