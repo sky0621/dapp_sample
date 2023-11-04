@@ -32,12 +32,15 @@ describe("MemberNFTコントラクト", async function() {
         expect(await memberNFT.ownerOf(1)).to.equal(account1.address);
     })
 
-    // it("NFT作成のたびにtokenIdがインクリメントされるべき", async function() {
-    //     expect("").to.equal(0);
-    // })
-    //
-    // it("owner以外はNFT作成に失敗すべき", async function() {
-    //     expect("").to.equal(0);
-    // })
+    it("NFT作成のたびにtokenIdがインクリメントされるべき", async function() {
+        await memberNFT.nftMint(account1.address, tokenUri1);
+        await memberNFT.nftMint(account1.address, tokenUri2);
+        expect(await memberNFT.tokenURI(1)).to.equal(tokenUri1);
+        expect(await memberNFT.tokenURI(2)).to.equal(tokenUri2);
+    })
+
+    it("owner以外はNFT作成に失敗すべき", async function() {
+        expect(memberNFT.connect(account1).nftMint(account1.address, tokenUri1)).to.be.revertedWith("");
+    })
 
 })
